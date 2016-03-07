@@ -8,7 +8,7 @@ using namespace std;
 int main(int argc, char*argv[]){
 
 	(void)echo();
-	int ganador=0,jugador=1,validar_movimiento;
+	int ganador=0,jugador=1,validar_movimiento,Valides_entrada;
 	char continuar='s';
 	char cordenada[10];
 	char cordenada_x1,cordenada_x2,cordenada_y1,cordenada_y2;
@@ -241,6 +241,8 @@ int main(int argc, char*argv[]){
 					x1 = 6;
 				}else if(cordenada_x1=='H'){
 					x1 = 7;
+				}else{
+					Valides_entrada=1;
 				}
 
 				if(cordenada_y1=='0'){
@@ -259,6 +261,8 @@ int main(int argc, char*argv[]){
 					y1 = 6;
 				}else if(cordenada_y1=='7'){
 					y1 = 7;
+				}else{
+					Valides_entrada=1;
 				}	
 				
 				//lugar hacia donde se movera la pieza
@@ -282,6 +286,8 @@ int main(int argc, char*argv[]){
 					x2 = 6;
 				}else if(cordenada_x2=='H'){
 					x2 = 7;
+				}else{
+					Valides_entrada=1;
 				}
 
 				if(cordenada_y2=='0'){
@@ -300,13 +306,15 @@ int main(int argc, char*argv[]){
 					y2 = 6;
 				}else if(cordenada_y2=='7'){
 					y2 = 7;
-				}			
+				}else{
+					Valides_entrada=1;
+				}		
 
 				//validadno si la pieza es valida
 				if(tablero2[x1][y1]==1 || tablero2[x1][y1]==11 || tablero2[x1][y1]==111){
-					if(tablero2[x2][y2]==1 || tablero2[x2][y2]==11 || tablero2[x2][y2]==111){
+					if(tablero2[x2][y2]==1 || tablero2[x2][y2]==11 || tablero2[x2][y2]==111 || Valides_entrada==1){
 						move(7,50);
-						printw("Ingreso cordenadas no valida (no puede moverse al espacio que queria)");
+						printw("Ingreso cordenadas no valida");
 						move(8,50);
 						printw("Desea continuar[s/n]:       ");
 						refresh();
@@ -493,7 +501,7 @@ int main(int argc, char*argv[]){
 					}
 				}else{
 					move(7,50);
-					printw("Ingreso cordenadas no valida (en la pieza que elijio)");
+					printw("Ingreso cordenadas no valida");
 					move(8,50);
 					printw("Desea continuar[s/n]:       ");
 					refresh();
@@ -514,6 +522,7 @@ int main(int argc, char*argv[]){
 
 				jugador--;
 			}
+			Valides_entrada=0;
 		}
 		clear();
 
