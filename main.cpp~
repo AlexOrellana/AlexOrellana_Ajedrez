@@ -520,6 +520,295 @@ int main(int argc, char*argv[]){
 				refresh();
 				attroff (COLOR_PAIR(2));
 
+				//tomando cordenadas ingresadas por el usuario
+
+				//tomando pieza a mover
+				cordenada_x1=cordenada[0];
+				cordenada_y1=cordenada[1];
+				
+				if(cordenada_x1=='A'){
+					x1 = 0;
+				}else if(cordenada_x1=='B'){
+					x1 = 1;
+				}else if(cordenada_x1=='C'){
+					x1 = 2;
+				}else if(cordenada_x1=='D'){
+					x1 = 3;
+				}else if(cordenada_x1=='E'){
+					x1 = 4;
+				}else if(cordenada_x1=='F'){
+					x1 = 5;
+				}else if(cordenada_x1=='G'){
+					x1 = 6;
+				}else if(cordenada_x1=='H'){
+					x1 = 7;
+				}else{
+					Valides_entrada=1;
+				}
+
+				if(cordenada_y1=='0'){
+					y1 = 0;
+				}else if(cordenada_y1=='1'){
+					y1 = 1;
+				}else if(cordenada_y1=='2'){
+					y1 = 2;
+				}else if(cordenada_y1=='3'){
+					y1 = 3;
+				}else if(cordenada_y1=='4'){
+					y1 = 4;
+				}else if(cordenada_y1=='5'){
+					y1 = 5;
+				}else if(cordenada_y1=='6'){
+					y1 = 6;
+				}else if(cordenada_y1=='7'){
+					y1 = 7;
+				}else{
+					Valides_entrada=1;
+				}	
+				
+				//lugar hacia donde se movera la pieza
+				//tomando pieza a mover
+				cordenada_x2=cordenada[2];
+				cordenada_y2=cordenada[3];
+
+				if(cordenada_x2=='A'){
+					x2 = 0;
+				}else if(cordenada_x2=='B'){
+					x2 = 1;
+				}else if(cordenada_x2=='C'){
+					x2 = 2;
+				}else if(cordenada_x2=='D'){
+					x2 = 3;
+				}else if(cordenada_x2=='E'){
+					x2 = 4;
+				}else if(cordenada_x2=='F'){
+					x2 = 5;
+				}else if(cordenada_x2=='G'){
+					x2 = 6;
+				}else if(cordenada_x2=='H'){
+					x2 = 7;
+				}else{
+					Valides_entrada=1;
+				}
+
+				if(cordenada_y2=='0'){
+					y2 = 0;
+				}else if(cordenada_y2=='1'){
+					y2 = 1;
+				}else if(cordenada_y2=='2'){
+					y2 = 2;
+				}else if(cordenada_y2=='3'){
+					y2 = 3;
+				}else if(cordenada_y2=='4'){
+					y2 = 4;
+				}else if(cordenada_y2=='5'){
+					y2 = 5;
+				}else if(cordenada_y2=='6'){
+					y2 = 6;
+				}else if(cordenada_y2=='7'){
+					y2 = 7;
+				}else{
+					Valides_entrada=1;
+				}		
+
+				//validadno si la pieza es valida
+				if(tablero2[x1][y1]==2 || tablero2[x1][y1]==22 || tablero2[x1][y1]==222){
+					if(tablero2[x2][y2]==2 || tablero2[x2][y2]==22 || tablero2[x2][y2]==222 || Valides_entrada==1){
+						move(7,50);
+						printw("Ingreso cordenadas no valida");
+						move(8,50);
+						printw("Desea continuar[s/n]:       ");
+						refresh();
+    						continuar = getch();	
+					}else{
+						if(tablero[x1][y1]=="[P]" && tablero2[x2][y2]!=1 && tablero2[x2][y2]!=11 && tablero2[x2][y2]!=111){
+							if(tablero2[x1][y1]==222){
+								if(x2==x1+2 && y1==y2){
+									tablero[x2][y2]="[P]";
+									tablero2[x2][y2]= 2;
+									tablero[x1][y1]="[ ]";
+									tablero2[x1][y1]= 0;	
+								}else if(x2==x1+1 && y1==y2){
+									tablero[x2][y2]="[P]";
+									tablero2[x2][y2]= 2;
+									tablero[x1][y1]="[ ]";
+									tablero2[x1][y1]= 0;
+								}else if(x1+2==x2 && y1+2==y2){
+									if(tablero2[x1+1][y1+1]==1 || tablero2[x1+1][y1+1]==111 || tablero2[x1+1][y1+1]==11){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[P]";
+										tablero2[x2][y2]= 2;
+										tablero[x1+1][y1+1]="[ ]";
+										tablero2[x1+1][y1+1]= 0;
+									}								
+								}
+							}else if(tablero2[x1][y1]==2){
+								if(x2==x1+1 && y1==y2){
+									tablero[x1][y1]="[ ]";
+									tablero2[x1][y1]= 0;
+									tablero[x2][y2]="[P]";
+									tablero2[x2][y2]= 2;
+								}else if(x1+2==x2 && y1+2==y2){
+									if(tablero2[x1+1][y1+1]==2 || tablero2[x1+1][y1+1]==222 || tablero2[x1+1][y1+1]==22){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[P]";
+										tablero2[x2][y2]= 2;
+										tablero[x1+1][y1+1]="[ ]";
+										tablero2[x1+1][y1+1]= 0;
+									}								
+								}
+							}
+						}else if(tablero[x1][y1]=="[T]"){
+							validar_movimiento=0;
+							if(x1==x2){
+								if(y1<y2){
+									for(int i=y1;i<y2;i++){
+										if(tablero2[x1][i]!=0 && i!=y1){
+											validar_movimiento++;	
+										}	
+									}	
+								}else if(y1>y2){
+									for(int i=y1;i>y2;i--){
+										if(tablero2[x1][i]!=0 && i!=y1){
+											validar_movimiento++;	
+										}
+									}	
+								}
+							}else if(y1==y2){
+								if(x1<x2){
+									for(int i=x1;i<x2;i++){
+										if(tablero2[i][y1]!=0 && i!=x1){
+											validar_movimiento++;	
+										}	
+									}	
+								}else if(y1>y2){
+									for(int i=y1;i>y2;i--){
+										if(tablero2[i][y1]!=0 && i!=x1){
+											validar_movimiento++;	
+										}
+									}	
+								}
+							}
+
+							if(validar_movimiento==0){
+								tablero[x1][y1]="[ ]";
+								tablero2[x1][y1]= 0;
+								tablero[x2][y2]="[T]";
+								tablero2[x2][y2]= 2;
+							}
+						}else if(tablero[x1][y1]=="[C]"){
+							if(x2==x1+2 && y2==y1-1){
+								if(tablero2[x1+1][y1]!=0 || tablero2[x1+2][y1]!=0){
+
+								}else{
+									tablero[x1][y1]="[ ]";
+									tablero2[x1][y1]= 0;
+									tablero[x2][y2]="[C]";
+									tablero2[x2][y2]= 2;
+								}
+							}else if(x2==x1+2 && y2==y1+1){
+								if(tablero2[x1+1][y1]!=0 || tablero2[x1+2][y1]!=0){
+
+								}else{
+									tablero[x1][y1]="[ ]";
+									tablero2[x1][y1]= 0;
+									tablero[x2][y2]="[C]";
+									tablero2[x2][y2]= 2;
+								}
+							}else if(x2==x1+1 && y2==y1+2){
+								if(tablero2[x1][y1+1]!=0 || tablero2[x1][y1+2]!=0){
+
+								}else{
+									tablero[x1][y1]="[ ]";
+									tablero2[x1][y1]= 0;
+									tablero[x2][y2]="[C]";
+									tablero2[x2][y2]= 2;
+								}
+							}else if(x2==x1-1 && y2==y1+2){
+								if(tablero2[x1][y1+1]!=0 || tablero2[x1][y1+2]!=0){
+
+								}else{
+									tablero[x1][y1]="[ ]";
+									tablero2[x1][y1]= 0;
+									tablero[x2][y2]="[C]";
+									tablero2[x2][y2]= 2;
+								}
+							}else if(x2==x1+1 && y2==y1-2){
+								if(tablero2[x1][y1-1]!=0 || tablero2[x1][y1-2]!=0){
+
+								}else{
+									tablero[x1][y1]="[ ]";
+									tablero2[x1][y1]= 0;
+									tablero[x2][y2]="[C]";
+									tablero2[x2][y2]= 2;
+								}
+							}else if(x2==x1-1 && y2==y1-2){
+								if(tablero2[x1][y1-1]!=0 || tablero2[x1][y1-2]!=0){
+
+								}else{
+									tablero[x1][y1]="[ ]";
+									tablero2[x1][y1]= 0;
+									tablero[x2][y2]="[C]";
+									tablero2[x2][y2]= 2;
+								}
+							}else if(x2==x1-2 && y2==y1+1){
+								if(tablero2[x1-1][y1]!=0 || tablero2[x1-2][y1]!=0){
+
+								}else{
+									tablero[x1][y1]="[ ]";
+									tablero2[x1][y1]= 0;
+									tablero[x2][y2]="[C]";
+									tablero2[x2][y2]= 1;
+								}
+							}else if(x2==x1-2 && y2==y1-1){
+								if(tablero2[x1-1][y1]!=0 || tablero2[x1-2][y1]!=0){
+
+								}else{
+									tablero[x1][y1]="[ ]";
+									tablero2[x1][y1]= 0;
+									tablero[x2][y2]="[C]";
+									tablero2[x2][y2]= 2;
+								}
+							}
+						}else if(tablero[x1][y1]=="[A]"){
+
+						}else if(tablero[x1][y1]=="[K]"){
+							if(x2==x1+1 && y1==y2){
+								tablero[x1][y1]="[ ]";
+								tablero2[x1][y1]= 0;
+								tablero[x2][y2]="[K]";
+								tablero2[x2][y2]= 2;
+							}else if(x2==x1-1 && y1==y2){
+								tablero[x1][y1]="[ ]";
+								tablero2[x1][y1]= 0;
+								tablero[x2][y2]="[K]";
+								tablero2[x2][y2]= 2;
+							}else if(x2==x1 && y2==y1+1){
+								tablero[x1][y1]="[ ]";
+								tablero2[x1][y1]= 0;
+								tablero[x2][y2]="[K]";
+								tablero2[x2][y2]= 2;
+							}else if(x2==x1 && y2==y1-1){
+								tablero[x1][y1]="[ ]";
+								tablero2[x1][y1]= 0;
+								tablero[x2][y2]="[K]";
+								tablero2[x2][y2]= 2;
+							}
+						}else if(tablero[x1][y1]=="[Q]"){
+
+						}
+					}
+				}else{
+					move(7,50);
+					printw("Ingreso cordenadas no valida");
+					move(8,50);
+					printw("Desea continuar[s/n]:       ");
+					refresh();
+    					continuar = getch();
+				}	
+
 				jugador--;
 			}
 			Valides_entrada=0;
