@@ -623,18 +623,18 @@ int main(int argc, char*argv[]){
 					}else{
 						if(tablero[x1][y1]=="[P]" && tablero2[x2][y2]!=1 && tablero2[x2][y2]!=11 && tablero2[x2][y2]!=111){
 							if(tablero2[x1][y1]==222){
-								if(x2==x1+2 && y1==y2){
+								if(x2==x1-2 && y1==y2){
 									tablero[x2][y2]="[P]";
 									tablero2[x2][y2]= 2;
 									tablero[x1][y1]="[ ]";
 									tablero2[x1][y1]= 0;	
-								}else if(x2==x1+1 && y1==y2){
+								}else if(x2==x1-1 && y1==y2){
 									tablero[x2][y2]="[P]";
 									tablero2[x2][y2]= 2;
 									tablero[x1][y1]="[ ]";
 									tablero2[x1][y1]= 0;
-								}else if(x1+2==x2 && y1+2==y2){
-									if(tablero2[x1+1][y1+1]==1 || tablero2[x1+1][y1+1]==111 || tablero2[x1+1][y1+1]==11){
+								}else if(x1-2==x2 && y1-2==y2){
+									if(tablero2[x1-1][y1-1]==1 || tablero2[x1-1][y1-1]==111 || tablero2[x1-1][y1+1]==11){
 										tablero[x1][y1]="[ ]";
 										tablero2[x1][y1]= 0;
 										tablero[x2][y2]="[P]";
@@ -644,12 +644,12 @@ int main(int argc, char*argv[]){
 									}								
 								}
 							}else if(tablero2[x1][y1]==2){
-								if(x2==x1+1 && y1==y2){
+								if(x2==x1-1 && y1==y2){
 									tablero[x1][y1]="[ ]";
 									tablero2[x1][y1]= 0;
 									tablero[x2][y2]="[P]";
 									tablero2[x2][y2]= 2;
-								}else if(x1+2==x2 && y1+2==y2){
+								}else if(x1-2==x2 && y1-2==y2){
 									if(tablero2[x1+1][y1+1]==2 || tablero2[x1+1][y1+1]==222 || tablero2[x1+1][y1+1]==22){
 										tablero[x1][y1]="[ ]";
 										tablero2[x1][y1]= 0;
