@@ -472,7 +472,71 @@ int main(int argc, char*argv[]){
 								}
 							}
 						}else if(tablero[x1][y1]=="[A]"){
+							validar_movimiento=0;
+							for(int i=1;i<8;i++){
+								if(x2 == x1+i && y2 == y1+i){
+									for(int x=1;x<=i;x++){
+										if(tablero2[x1+x][y1+x]!=0){
+											validar_movimiento++;
+										}
+									}
 
+									if(validar_movimiento==0){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[A]";
+										tablero2[x2][y2]= 1;
+									}
+								}	
+							}
+							for(int i=1;i<8;i++){
+								if(x2 == x1-i && y2 == y1-i){
+									for(int x=1;x<=i;x++){
+										if(tablero2[x1-x][y1-x]!=0){
+											validar_movimiento++;
+										}
+									}
+
+									if(validar_movimiento==0){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[A]";
+										tablero2[x2][y2]= 1;
+									}
+								}	
+							}
+							for(int i=1;i<8;i++){
+								if(x2 == x1+i && y2 == y1-i){
+									for(int x=1;x<=i;x++){
+										if(tablero2[x1+x][y1-x]!=0){
+											validar_movimiento++;
+										}
+									}
+
+									if(validar_movimiento==0){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[A]";
+										tablero2[x2][y2]= 1;
+									}
+								}	
+							}
+							for(int i=1;i<8;i++){
+								if(x2 == x1-i && y2 == y1+i){
+									for(int x=1;x<=i;x++){
+										if(tablero2[x1-x][y1+x]!=0){
+											validar_movimiento++;
+										}
+									}
+
+									if(validar_movimiento==0){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[A]";
+										tablero2[x2][y2]= 1;
+									}
+								}	
+							}
 						}else if(tablero[x1][y1]=="[K]"){
 							if(x2==x1+1 && y1==y2){
 								tablero[x1][y1]="[ ]";
@@ -496,7 +560,111 @@ int main(int argc, char*argv[]){
 								tablero2[x2][y2]= 1;
 							}
 						}else if(tablero[x1][y1]=="[Q]"){
+							validar_movimiento=0;
 
+							if(x1==x2){
+								if(y1<y2){
+									for(int i=y1;i<y2;i++){
+										if(tablero2[x1][i]!=0 && i!=y1){
+											validar_movimiento++;	
+										}	
+									}	
+								}else if(y1>y2){
+									for(int i=y1;i>y2;i--){
+										if(tablero2[x1][i]!=0 && i!=y1){
+											validar_movimiento++;	
+										}
+									}	
+								}
+							}else if(y1==y2){
+								if(x1<x2){
+									for(int i=x1;i<x2;i++){
+										if(tablero2[i][y1]!=0 && i!=x1){
+											validar_movimiento++;	
+										}	
+									}	
+								}else if(y1>y2){
+									for(int i=y1;i>y2;i--){
+										if(tablero2[i][y1]!=0 && i!=x1){
+											validar_movimiento++;	
+										}
+									}	
+								}
+							}
+
+							if(validar_movimiento==0){
+								if(x1==x2 || y1==y2){
+									tablero[x1][y1]="[ ]";
+									tablero2[x1][y1]= 0;
+									tablero[x2][y2]="[T]";
+									tablero2[x2][y2]= 1;
+								}
+							}
+
+							for(int i=1;i<8;i++){
+								if(x2 == x1+i && y2 == y1+i){
+									for(int x=1;x<=i;x++){
+										if(tablero2[x1+x][y1+x]!=0){
+											validar_movimiento++;
+										}
+									}
+
+									if(validar_movimiento==0){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[A]";
+										tablero2[x2][y2]= 1;
+									}
+								}	
+							}
+							for(int i=1;i<8;i++){
+								if(x2 == x1-i && y2 == y1-i){
+									for(int x=1;x<=i;x++){
+										if(tablero2[x1-x][y1-x]!=0){
+											validar_movimiento++;
+										}
+									}
+
+									if(validar_movimiento==0){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[A]";
+										tablero2[x2][y2]= 1;
+									}
+								}	
+							}
+							for(int i=1;i<8;i++){
+								if(x2 == x1+i && y2 == y1-i){
+									for(int x=1;x<=i;x++){
+										if(tablero2[x1+x][y1-x]!=0){
+											validar_movimiento++;
+										}
+									}
+
+									if(validar_movimiento==0){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[A]";
+										tablero2[x2][y2]= 1;
+									}
+								}	
+							}
+							for(int i=1;i<8;i++){
+								if(x2 == x1-i && y2 == y1+i){
+									for(int x=1;x<=i;x++){
+										if(tablero2[x1-x][y1+x]!=0){
+											validar_movimiento++;
+										}
+									}
+
+									if(validar_movimiento==0){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[A]";
+										tablero2[x2][y2]= 1;
+									}
+								}	
+							}
 						}
 					}
 				}else{
@@ -760,7 +928,7 @@ int main(int argc, char*argv[]){
 									tablero[x1][y1]="[ ]";
 									tablero2[x1][y1]= 0;
 									tablero[x2][y2]="[C]";
-									tablero2[x2][y2]= 1;
+									tablero2[x2][y2]= 2;
 								}
 							}else if(x2==x1-2 && y2==y1-1){
 								if(tablero2[x1-1][y1]!=0 || tablero2[x1-2][y1]!=0){
@@ -773,7 +941,71 @@ int main(int argc, char*argv[]){
 								}
 							}
 						}else if(tablero[x1][y1]=="[A]"){
+							validar_movimiento=0;
+							for(int i=1;i<8;i++){
+								if(x2 == x1+i && y2 == y1+i){
+									for(int x=1;x<=i;x++){
+										if(tablero2[x1+x][y1+x]!=0){
+											validar_movimiento++;
+										}
+									}
 
+									if(validar_movimiento==0){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[A]";
+										tablero2[x2][y2]= 2;
+									}
+								}	
+							}
+							for(int i=1;i<8;i++){
+								if(x2 == x1-i && y2 == y1-i){
+									for(int x=1;x<=i;x++){
+										if(tablero2[x1-x][y1-x]!=0){
+											validar_movimiento++;
+										}
+									}
+
+									if(validar_movimiento==0){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[A]";
+										tablero2[x2][y2]= 2;
+									}
+								}	
+							}
+							for(int i=1;i<8;i++){
+								if(x2 == x1+i && y2 == y1-i){
+									for(int x=1;x<=i;x++){
+										if(tablero2[x1+x][y1-x]!=0){
+											validar_movimiento++;
+										}
+									}
+
+									if(validar_movimiento==0){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[A]";
+										tablero2[x2][y2]= 2;
+									}
+								}	
+							}
+							for(int i=1;i<8;i++){
+								if(x2 == x1-i && y2 == y1+i){
+									for(int x=1;x<=i;x++){
+										if(tablero2[x1-x][y1+x]!=0){
+											validar_movimiento++;
+										}
+									}
+
+									if(validar_movimiento==0){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[A]";
+										tablero2[x2][y2]= 2;
+									}
+								}	
+							}
 						}else if(tablero[x1][y1]=="[K]"){
 							if(x2==x1+1 && y1==y2){
 								tablero[x1][y1]="[ ]";
@@ -797,7 +1029,111 @@ int main(int argc, char*argv[]){
 								tablero2[x2][y2]= 2;
 							}
 						}else if(tablero[x1][y1]=="[Q]"){
+							validar_movimiento=0;
 
+							if(x1==x2){
+								if(y1<y2){
+									for(int i=y1;i<y2;i++){
+										if(tablero2[x1][i]!=0 && i!=y1){
+											validar_movimiento++;	
+										}	
+									}	
+								}else if(y1>y2){
+									for(int i=y1;i>y2;i--){
+										if(tablero2[x1][i]!=0 && i!=y1){
+											validar_movimiento++;	
+										}
+									}	
+								}
+							}else if(y1==y2){
+								if(x1<x2){
+									for(int i=x1;i<x2;i++){
+										if(tablero2[i][y1]!=0 && i!=x1){
+											validar_movimiento++;	
+										}	
+									}	
+								}else if(y1>y2){
+									for(int i=y1;i>y2;i--){
+										if(tablero2[i][y1]!=0 && i!=x1){
+											validar_movimiento++;	
+										}
+									}	
+								}
+							}
+
+							if(validar_movimiento==0){
+								if(x1==x2 || y1==y2){
+									tablero[x1][y1]="[ ]";
+									tablero2[x1][y1]= 0;
+									tablero[x2][y2]="[Q]";
+									tablero2[x2][y2]= 2;
+								}
+							}
+
+							for(int i=1;i<8;i++){
+								if(x2 == x1+i && y2 == y1+i){
+									for(int x=1;x<=i;x++){
+										if(tablero2[x1+x][y1+x]!=0){
+											validar_movimiento++;
+										}
+									}
+
+									if(validar_movimiento==0){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[Q]";
+										tablero2[x2][y2]= 2;
+									}
+								}	
+							}
+							for(int i=1;i<8;i++){
+								if(x2 == x1-i && y2 == y1-i){
+									for(int x=1;x<=i;x++){
+										if(tablero2[x1-x][y1-x]!=0){
+											validar_movimiento++;
+										}
+									}
+
+									if(validar_movimiento==0){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[Q]";
+										tablero2[x2][y2]= 2;
+									}
+								}	
+							}
+							for(int i=1;i<8;i++){
+								if(x2 == x1+i && y2 == y1-i){
+									for(int x=1;x<=i;x++){
+										if(tablero2[x1+x][y1-x]!=0){
+											validar_movimiento++;
+										}
+									}
+
+									if(validar_movimiento==0){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[Q]";
+										tablero2[x2][y2]= 2;
+									}
+								}	
+							}
+							for(int i=1;i<8;i++){
+								if(x2 == x1-i && y2 == y1+i){
+									for(int x=1;x<=i;x++){
+										if(tablero2[x1-x][y1+x]!=0){
+											validar_movimiento++;
+										}
+									}
+
+									if(validar_movimiento==0){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[Q]";
+										tablero2[x2][y2]= 2;
+									}
+								}	
+							}
 						}
 					}
 				}else{
