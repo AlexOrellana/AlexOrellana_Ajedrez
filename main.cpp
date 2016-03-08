@@ -341,6 +341,15 @@ int main(int argc, char*argv[]){
 										tablero[x1+1][y1+1]="[ ]";
 										tablero2[x1+1][y1+1]= 0;
 									}								
+								}else if(x1+2==x2 && y1-2==y2){
+									if(tablero2[x1+1][y1-1]==2 || tablero2[x1+1][y1-1]==222 || tablero2[x1+1][y1-1]==22){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[P]";
+										tablero2[x2][y2]= 1;
+										tablero[x1+1][y1-1]="[ ]";
+										tablero2[x1+1][y1-1]= 0;
+									}								
 								}
 							}else if(tablero2[x1][y1]==1){
 								if(x2==x1+1 && y1==y2){
@@ -356,6 +365,15 @@ int main(int argc, char*argv[]){
 										tablero2[x2][y2]= 1;
 										tablero[x1+1][y1+1]="[ ]";
 										tablero2[x1+1][y1+1]= 0;
+									}								
+								}else if(x1+2==x2 && y1-2==y2){
+									if(tablero2[x1+1][y1-1]==2 || tablero2[x1+1][y1-1]==222 || tablero2[x1+1][y1-1]==22){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[P]";
+										tablero2[x2][y2]= 1;
+										tablero[x1+1][y1-1]="[ ]";
+										tablero2[x1+1][y1-1]= 0;
 									}								
 								}
 							}
@@ -596,7 +614,7 @@ int main(int argc, char*argv[]){
 								if(x1==x2 || y1==y2){
 									tablero[x1][y1]="[ ]";
 									tablero2[x1][y1]= 0;
-									tablero[x2][y2]="[T]";
+									tablero[x2][y2]="[Q]";
 									tablero2[x2][y2]= 1;
 								}
 							}
@@ -612,7 +630,7 @@ int main(int argc, char*argv[]){
 									if(validar_movimiento==0){
 										tablero[x1][y1]="[ ]";
 										tablero2[x1][y1]= 0;
-										tablero[x2][y2]="[A]";
+										tablero[x2][y2]="[Q]";
 										tablero2[x2][y2]= 1;
 									}
 								}	
@@ -628,7 +646,7 @@ int main(int argc, char*argv[]){
 									if(validar_movimiento==0){
 										tablero[x1][y1]="[ ]";
 										tablero2[x1][y1]= 0;
-										tablero[x2][y2]="[A]";
+										tablero[x2][y2]="[Q]";
 										tablero2[x2][y2]= 1;
 									}
 								}	
@@ -644,7 +662,7 @@ int main(int argc, char*argv[]){
 									if(validar_movimiento==0){
 										tablero[x1][y1]="[ ]";
 										tablero2[x1][y1]= 0;
-										tablero[x2][y2]="[A]";
+										tablero[x2][y2]="[Q]";
 										tablero2[x2][y2]= 1;
 									}
 								}	
@@ -660,7 +678,7 @@ int main(int argc, char*argv[]){
 									if(validar_movimiento==0){
 										tablero[x1][y1]="[ ]";
 										tablero2[x1][y1]= 0;
-										tablero[x2][y2]="[A]";
+										tablero[x2][y2]="[QQ]";
 										tablero2[x2][y2]= 1;
 									}
 								}	
