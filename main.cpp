@@ -5,16 +5,22 @@
 #include <cstring>
 #include <fstream>
 #include <sstream>
+#include <stdlib.h>  
 
 using namespace std;
+
+string** crear();
+void borrar(string** &arreglo, int size);
+int** crear2();
+void borrar2(int** &arreglo, int size);
 
 int main(int argc, char*argv[]){
 	
 	char cargar;
 	//crea tablero
-	string tablero[8][8];
+	string** tablero=crear();
 	//tablero para verificar movimientos de jugador 1 o 2	
-	int tablero2[8][8]; 
+	int** tablero2=crear2(); 
 	(void)echo();
 	int ganador=0,jugador=1,validar_movimiento,Valides_entrada,gano1=0,gano2=0,entrar=0;
 	char continuar='s';
@@ -24,10 +30,12 @@ int main(int argc, char*argv[]){
 	int x1,y1;
 	//cordenasa x,y de donde quiere mover
 	int x2,y2;
-	string arreglo1[64];int arreglo2[64];
+	//arreglos creados para cargar la partida
+	string arreglo1[192];
+	int arreglo2[65];
 
 	//temporal creada para imprimir las piezas del tablero
-	char* temp= new char[5];;
+	char* temp= new char[5];
 
 	initscr();
 	start_color();
@@ -38,17 +46,17 @@ int main(int argc, char*argv[]){
 	move(8,50);
 	printw("Desea cargar[s/n]:       ");
 	refresh();
-    cargar = getch();
+    	cargar = getch();
 	if(cargar=='s'){
 		///////////cargar
 		ifstream traer("tablero1.txt");
-		for(int i=0;i<64;i++){
+		for(int i=0;i<192;i++){
 			arreglo1[i] = traer.get();
 		}	
 		traer.close();	
 		ifstream traer2("tablero2.txt");
-		for(int i=0;i<64;i++){
-			arreglo2[i] = traer.get();
+		for(int i=0;i<65;i++){
+			arreglo2[i] = traer2.get();
 		}	
 		traer2.close();	
 
@@ -56,15 +64,17 @@ int main(int argc, char*argv[]){
 		int contador=0;
 		for(int i=0;i<8;i++){
 			for(int x=0;x<8;x++){
-				tablero[i][x]=arreglo1[contador];				
-				contador++;
+				tablero[i][x]=arreglo1[contador]+arreglo1[contador+1]+arreglo1[contador+2];				
+				contador+=3;
 			}
 		}
 	
 		contador=0;
 		for(int i=0;i<8;i++){
 			for(int x=0;x<8;x++){
-				tablero2[i][x]=arreglo2[contador];				
+				
+				tablero2[i][x]= arreglo2[contador];	
+				
 				contador++;
 			}
 		}
@@ -76,7 +86,7 @@ int main(int argc, char*argv[]){
 		
 		//rey
 		tablero[0][3]="[K]";
-		tablero2[0][3]=11;
+		tablero2[0][3]=5;
 		
 		//reyna
 		tablero[0][4]="[Q]";
@@ -85,7 +95,7 @@ int main(int argc, char*argv[]){
 		//peones
 		for(int i=0;i<8;i++){
 			tablero[1][i]="[P]";
-			tablero2[1][i]=111;
+			tablero2[1][i]=3;
 		}
 		
 		//torres
@@ -110,7 +120,7 @@ int main(int argc, char*argv[]){
 		
 		//rey
 		tablero[7][3]="[K]";
-		tablero2[7][3]=22;
+		tablero2[7][3]=6;
 		
 		//reyna
 		tablero[7][4]="[Q]";
@@ -119,7 +129,7 @@ int main(int argc, char*argv[]){
 		//peones
 		for(int i=0;i<8;i++){
 			tablero[6][i]="[P]";
-			tablero2[6][i]=222;
+			tablero2[6][i]=4;
 		}
 		
 		//torres
@@ -189,14 +199,14 @@ int main(int argc, char*argv[]){
 
 	
 			for(int j=0;j<8;j++){
-				if(tablero2[i][j]==1 || tablero2[i][j]==11 || tablero2[i][j]==111){
+				if(tablero2[i][j]==1 || tablero2[i][j]==3 || tablero2[i][j]==5){
 					attron(COLOR_PAIR(1));
 					strcpy(temp, tablero[i][j].c_str());
 					printw(temp);
 					printw(" ");
 					refresh();
 					attroff (COLOR_PAIR(1));
-				}else if(tablero2[i][j]==2 || tablero2[i][j]==22 || tablero2[i][j]==222){
+				}else if(tablero2[i][j]==2 || tablero2[i][j]==4 || tablero2[i][j]==6){
 					attron(COLOR_PAIR(2));
 					strcpy(temp, tablero[i][j].c_str());
 					printw(temp);
@@ -354,8 +364,8 @@ int main(int argc, char*argv[]){
 				}		
 
 				//validadno si la pieza es valida
-				if(tablero2[x1][y1]==1 || tablero2[x1][y1]==11 || tablero2[x1][y1]==111){
-					if(tablero2[x2][y2]==1 || tablero2[x2][y2]==11 || tablero2[x2][y2]==111 || Valides_entrada==1){
+				if(tablero2[x1][y1]==1 || tablero2[x1][y1]==3 || tablero2[x1][y1]==5){
+					if(tablero2[x2][y2]==1 || tablero2[x2][y2]==3 || tablero2[x2][y2]==5|| Valides_entrada==1){
 						move(7,50);
 						printw("Ingreso cordenadas no valida");
 						move(8,50);
@@ -363,8 +373,8 @@ int main(int argc, char*argv[]){
 						refresh();
     						continuar = getch();	
 					}else{
-						if(tablero[x1][y1]=="[P]" && tablero2[x2][y2]!=2 && tablero2[x2][y2]!=22 && tablero2[x2][y2]!=222){
-							if(tablero2[x1][y1]==111){
+						if(tablero[x1][y1]=="[P]" && tablero2[x2][y2]!=2 && tablero2[x2][y2]!=6 && tablero2[x2][y2]!=4){
+							if(tablero2[x1][y1]==3){
 								if(x2==x1+2 && y1==y2){
 									tablero[x2][y2]="[P]";
 									tablero2[x2][y2]= 1;
@@ -376,7 +386,7 @@ int main(int argc, char*argv[]){
 									tablero[x1][y1]="[ ]";
 									tablero2[x1][y1]= 0;
 								}else if(x1+2==x2 && y1+2==y2){
-									if(tablero2[x1+1][y1+1]==2 || tablero2[x1+1][y1+1]==222 || tablero2[x1+1][y1+1]==22){
+									if(tablero2[x1+1][y1+1]==2 || tablero2[x1+1][y1+1]==4 || tablero2[x1+1][y1+1]==6){
 										tablero[x1][y1]="[ ]";
 										tablero2[x1][y1]= 0;
 										tablero[x2][y2]="[P]";
@@ -385,7 +395,7 @@ int main(int argc, char*argv[]){
 										tablero2[x1+1][y1+1]= 0;
 									}								
 								}else if(x1+2==x2 && y1-2==y2){
-									if(tablero2[x1+1][y1-1]==2 || tablero2[x1+1][y1-1]==222 || tablero2[x1+1][y1-1]==22){
+									if(tablero2[x1+1][y1-1]==2 || tablero2[x1+1][y1-1]==4 || tablero2[x1+1][y1-1]==6){
 										tablero[x1][y1]="[ ]";
 										tablero2[x1][y1]= 0;
 										tablero[x2][y2]="[P]";
@@ -401,7 +411,7 @@ int main(int argc, char*argv[]){
 									tablero[x2][y2]="[P]";
 									tablero2[x2][y2]= 1;
 								}else if(x1+2==x2 && y1+2==y2){
-									if(tablero2[x1+1][y1+1]==2 || tablero2[x1+1][y1+1]==222 || tablero2[x1+1][y1+1]==22){
+									if(tablero2[x1+1][y1+1]==2 || tablero2[x1+1][y1+1]==4 || tablero2[x1+1][y1+1]==6){
 										tablero[x1][y1]="[ ]";
 										tablero2[x1][y1]= 0;
 										tablero[x2][y2]="[P]";
@@ -410,7 +420,7 @@ int main(int argc, char*argv[]){
 										tablero2[x1+1][y1+1]= 0;
 									}								
 								}else if(x1+2==x2 && y1-2==y2){
-									if(tablero2[x1+1][y1-1]==2 || tablero2[x1+1][y1-1]==222 || tablero2[x1+1][y1-1]==22){
+									if(tablero2[x1+1][y1-1]==2 || tablero2[x1+1][y1-1]==4 || tablero2[x1+1][y1-1]==6){
 										tablero[x1][y1]="[ ]";
 										tablero2[x1][y1]= 0;
 										tablero[x2][y2]="[P]";
@@ -433,13 +443,13 @@ int main(int argc, char*argv[]){
 
 									transformar_pieza=cambio_peon[0];
 
-									if(cordenada_x2=='A'){
+									if(transformar_pieza=='A'){
 										tablero[x2][y2]="[A]";
-									}else if(cordenada_x2=='T'){
+									}else if(transformar_pieza=='T'){
 										tablero[x2][y2]="[T]";
-									}else if(cordenada_x2=='C'){
+									}else if(transformar_pieza=='C'){
 										tablero[x2][y2]="[C]";
-									}else if(cordenada_x2=='Q'){
+									}else if(transformar_pieza=='Q'){
 										tablero[x2][y2]="[Q]";
 									}else{
 										tablero[x2][y2]="[Q]";
@@ -747,7 +757,7 @@ int main(int argc, char*argv[]){
 									if(validar_movimiento==0){
 										tablero[x1][y1]="[ ]";
 										tablero2[x1][y1]= 0;
-										tablero[x2][y2]="[QQ]";
+										tablero[x2][y2]="[Q]";
 										tablero2[x2][y2]= 1;
 									}
 								}	
@@ -867,8 +877,8 @@ int main(int argc, char*argv[]){
 				}		
 
 				//validadno si la pieza es valida
-				if(tablero2[x1][y1]==2 || tablero2[x1][y1]==22 || tablero2[x1][y1]==222){
-					if(tablero2[x2][y2]==2 || tablero2[x2][y2]==22 || tablero2[x2][y2]==222 || Valides_entrada==1){
+				if(tablero2[x1][y1]==2 || tablero2[x1][y1]==4 || tablero2[x1][y1]==6){
+					if(tablero2[x2][y2]==2 || tablero2[x2][y2]==4 || tablero2[x2][y2]==6 || Valides_entrada==1){
 						move(7,50);
 						printw("Ingreso cordenadas no valida");
 						move(8,50);
@@ -876,8 +886,8 @@ int main(int argc, char*argv[]){
 						refresh();
     						continuar = getch();	
 					}else{
-						if(tablero[x1][y1]=="[P]" && tablero2[x2][y2]!=1 && tablero2[x2][y2]!=11 && tablero2[x2][y2]!=111){
-							if(tablero2[x1][y1]==222){
+						if(tablero[x1][y1]=="[P]" && tablero2[x2][y2]!=1 && tablero2[x2][y2]!=3 && tablero2[x2][y2]!=5){
+							if(tablero2[x1][y1]==4){
 								if(x2==x1-2 && y1==y2){
 									tablero[x2][y2]="[P]";
 									tablero2[x2][y2]= 2;
@@ -889,7 +899,7 @@ int main(int argc, char*argv[]){
 									tablero[x1][y1]="[ ]";
 									tablero2[x1][y1]= 0;
 								}else if(x1-2==x2 && y1-2==y2){
-									if(tablero2[x1-1][y1-1]==1 || tablero2[x1-1][y1-1]==111 || tablero2[x1-1][y1+1]==11){
+									if(tablero2[x1-1][y1-1]==1 || tablero2[x1-1][y1-1]==3 || tablero2[x1-1][y1+1]==5){
 										tablero[x1][y1]="[ ]";
 										tablero2[x1][y1]= 0;
 										tablero[x2][y2]="[P]";
@@ -905,7 +915,7 @@ int main(int argc, char*argv[]){
 									tablero[x2][y2]="[P]";
 									tablero2[x2][y2]= 2;
 								}else if(x1-2==x2 && y1-2==y2){
-									if(tablero2[x1-1][y1-1]==1 || tablero2[x1-1][y1-1]==111 || tablero2[x1-1][y1-1]==11){
+									if(tablero2[x1-1][y1-1]==1 || tablero2[x1-1][y1-1]==3 || tablero2[x1-1][y1-1]==5){
 										tablero[x1][y1]="[ ]";
 										tablero2[x1][y1]= 0;
 										tablero[x2][y2]="[P]";
@@ -914,7 +924,7 @@ int main(int argc, char*argv[]){
 										tablero2[x1-1][y1-1]= 0;
 									}								
 								}else if(x1-2==x2 && y1+2==y2){
-									if(tablero2[x1-1][y1+1]==1 || tablero2[x1-1][y1+1]==111 || tablero2[x1-1][y1+1]==11){
+									if(tablero2[x1-1][y1+1]==1 || tablero2[x1-1][y1+1]==3 || tablero2[x1-1][y1+1]==5){
 										tablero[x1][y1]="[ ]";
 										tablero2[x1][y1]= 0;
 										tablero[x2][y2]="[P]";
@@ -937,13 +947,13 @@ int main(int argc, char*argv[]){
 
 									transformar_pieza=cambio_peon[0];
 
-									if(cordenada_x2=='A'){
+									if(transformar_pieza=='A'){
 										tablero[x2][y2]="[A]";
-									}else if(cordenada_x2=='T'){
+									}else if(transformar_pieza=='T'){
 										tablero[x2][y2]="[T]";
-									}else if(cordenada_x2=='C'){
+									}else if(transformar_pieza=='C'){
 										tablero[x2][y2]="[C]";
-									}else if(cordenada_x2=='Q'){
+									}else if(transformar_pieza=='Q'){
 										tablero[x2][y2]="[Q]";
 									}else{
 										tablero[x2][y2]="[Q]";
@@ -1307,11 +1317,14 @@ int main(int argc, char*argv[]){
 			}
 		}
 
+
+
 		for(int i=0;i<8;i++){
 			for(int x=0;x<8;x++){
-				guardar2 += tablero2[i][x];
+				guardar2 +=tablero2[i][x];
 			}
 		}
+
 
 		ofstream escribir("tablero1.txt");
 		escribir  << guardar; 
@@ -1326,7 +1339,44 @@ int main(int argc, char*argv[]){
 	}else if(gano1<gano2){
 		printw("Gano jugador 2");
 	}
+	borrar(tablero, 8);
+	borrar2(tablero2, 8);
 	getch();
 	endwin();
 	return 0;
+}
+
+string** crear(){
+	int size = 8;
+	string** arreglo = new string*[size];
+	for (int i = 0; i < size; i++){
+		arreglo[i] = new string [size];
+		for (int j = 0; j < size; j++){
+			arreglo[i][j] = "";
+		}
+	}
+	return arreglo;
+}
+
+void borrar(string** &arreglo, int size){
+	for (int i = 0; i < size; i++){
+		delete[] arreglo[i];
+	}
+	delete[] arreglo;
+}
+void borrar2(int** &arreglo, int size){
+	for (int i = 0; i < size; i++)
+		delete[] arreglo[i];
+	delete[] arreglo;
+}
+int** crear2(){
+	int size = 8;
+	int** arreglo = new int*[size];
+	for (int i = 0; i < size; i++){
+		arreglo[i] = new int [size];
+			for (int j = 0; j < size; j++){
+					arreglo[i][j] = 1;
+			}
+	}
+	return arreglo;
 }
