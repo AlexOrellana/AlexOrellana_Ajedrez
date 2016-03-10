@@ -1,21 +1,30 @@
 #include <curses.h>
+#include <stdio.h>
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
 int main(int argc, char*argv[]){
-
+	
+	char cargar;
+	//crea tablero
+	string tablero[8][8];
+	//tablero para verificar movimientos de jugador 1 o 2	
+	int tablero2[8][8]; 
 	(void)echo();
-	int ganador=0,jugador=1,validar_movimiento,Valides_entrada;
+	int ganador=0,jugador=1,validar_movimiento,Valides_entrada,gano1=0,gano2=0,entrar=0;
 	char continuar='s';
-	char cordenada[10];
-	char cordenada_x1,cordenada_x2,cordenada_y1,cordenada_y2;
+	char cordenada[10],cambio_peon[10];
+	char cordenada_x1,cordenada_x2,cordenada_y1,cordenada_y2,transformar_pieza;
 	//cordenasa x,y de las pizas a mover
 	int x1,y1;
 	//cordenasa x,y de donde quiere mover
 	int x2,y2;
+	string arreglo1[64];int arreglo2[64];
 
 	//temporal creada para imprimir las piezas del tablero
 	char* temp= new char[5];;
@@ -25,84 +34,118 @@ int main(int argc, char*argv[]){
 	init_pair(1,COLOR_GREEN,COLOR_BLACK); 
 	init_pair(2,COLOR_BLUE,COLOR_BLACK);
 
-	//crea tablero
-	string tablero[8][8];
-	//tablero para verificar movimientos de jugador 1 o 2	
-	int tablero2[8][8];
+	//cargar o no partida
+	move(8,50);
+	printw("Desea cargar[s/n]:       ");
+	refresh();
+    cargar = getch();
+	if(cargar=='s'){
+		///////////cargar
+		ifstream traer("tablero1.txt");
+		for(int i=0;i<64;i++){
+			arreglo1[i] = traer.get();
+		}	
+		traer.close();	
+		ifstream traer2("tablero2.txt");
+		for(int i=0;i<64;i++){
+			arreglo2[i] = traer.get();
+		}	
+		traer2.close();	
 
-	//llena tablero jugador 1
+		//con es para poder recorrer el arreglo
+		int contador=0;
+		for(int i=0;i<8;i++){
+			for(int x=0;x<8;x++){
+				tablero[i][x]=arreglo1[contador];				
+				contador++;
+			}
+		}
 	
-	//rey
-	tablero[0][3]="[K]";
-	tablero2[0][3]=11;
+		contador=0;
+		for(int i=0;i<8;i++){
+			for(int x=0;x<8;x++){
+				tablero2[i][x]=arreglo2[contador];				
+				contador++;
+			}
+		}
+		
+	}else{
+
 	
-	//reyna
-	tablero[0][4]="[Q]";
-	tablero2[0][4]=1;
-
-	//peones
-	for(int i=0;i<8;i++){
-		tablero[1][i]="[P]";
-		tablero2[1][i]=111;
-	}
+		//llena tablero jugador 1
+		
+		//rey
+		tablero[0][3]="[K]";
+		tablero2[0][3]=11;
+		
+		//reyna
+		tablero[0][4]="[Q]";
+		tablero2[0][4]=1;
 	
-	//torres
-	tablero[0][0]="[T]";
-	tablero2[0][0]=1;
-	tablero[0][7]="[T]";
-	tablero2[0][7]=1;
-
-	//caballos
-	tablero[0][1]="[C]";
-	tablero[0][6]="[C]";
-	tablero2[0][1]=1;
-	tablero2[0][6]=1;
-
-	//alfil
-	tablero[0][2]="[A]";
-	tablero[0][5]="[A]";
-	tablero2[0][2]=1;
-	tablero2[0][5]=1;
-
-	//llena tablero jugador 2
-
-	//rey
-	tablero[7][3]="[K]";
-	tablero2[7][3]=22;
+		//peones
+		for(int i=0;i<8;i++){
+			tablero[1][i]="[P]";
+			tablero2[1][i]=111;
+		}
+		
+		//torres
+		tablero[0][0]="[T]";
+		tablero2[0][0]=1;
+		tablero[0][7]="[T]";
+		tablero2[0][7]=1;
 	
-	//reyna
-	tablero[7][4]="[Q]";
-	tablero2[7][4]=2;
-
-	//peones
-	for(int i=0;i<8;i++){
-		tablero[6][i]="[P]";
-		tablero2[6][i]=222;
-	}
+		//caballos
+		tablero[0][1]="[C]";
+		tablero[0][6]="[C]";
+		tablero2[0][1]=1;
+		tablero2[0][6]=1;
 	
-	//torres
-	tablero[7][7]="[T]";
-	tablero2[7][7]=2;
-	tablero[7][0]="[T]";
-	tablero2[7][0]=2;
-
-	//caballos
-	tablero[7][1]="[C]";
-	tablero[7][6]="[C]";
-	tablero2[7][1]=2;
-	tablero2[7][6]=2;	
+		//alfil
+		tablero[0][2]="[A]";
+		tablero[0][5]="[A]";
+		tablero2[0][2]=1;
+		tablero2[0][5]=1;
 	
-	//alfil
-	tablero[7][2]="[A]";
-	tablero[7][5]="[A]";
-	tablero2[7][2]=2;
-	tablero2[7][5]=2;
+		//llena tablero jugador 2
+		
+		//rey
+		tablero[7][3]="[K]";
+		tablero2[7][3]=22;
+		
+		//reyna
+		tablero[7][4]="[Q]";
+		tablero2[7][4]=2;
+	
+		//peones
+		for(int i=0;i<8;i++){
+			tablero[6][i]="[P]";
+			tablero2[6][i]=222;
+		}
+		
+		//torres
+		tablero[7][7]="[T]";
+		tablero2[7][7]=2;
+		tablero[7][0]="[T]";
+		tablero2[7][0]=2;
+	
+		//caballos
+		tablero[7][1]="[C]";
+		tablero[7][6]="[C]";
+		tablero2[7][1]=2;
+		tablero2[7][6]=2;	
+		
+		//alfil
+		tablero[7][2]="[A]";
+		tablero[7][5]="[A]";
+		tablero2[7][2]=2;
+		tablero2[7][5]=2;
 
-	for(int i=0;i<8;i++){
-		for(int j=0;j<8;j++){
-			if(tablero[i][j]!="[P]" && tablero[i][j]!="[A]" && tablero[i][j]!="[T]" && tablero[i][j]!="[C]" && tablero[i][j]!="[K]" && tablero[i][j]!="[Q]"){
-				tablero[i][j]="[ ]";
-				tablero2[i][j]=0;
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++){
+				if(tablero[i][j]!="[P]" && tablero[i][j]!="[A]" && tablero[i][j]!="[T]" && tablero[i][j]!="[C]" && tablero[i][j]!="[K]" && tablero[i][j]!="[Q]"){
+					tablero[i][j]="[ ]";
+					tablero2[i][j]=0;
+				}
 			}
 		}
 	}
@@ -375,6 +418,32 @@ int main(int argc, char*argv[]){
 										tablero[x1+1][y1-1]="[ ]";
 										tablero2[x1+1][y1-1]= 0;
 									}								
+								}
+								//cambiando el peon a otra pieza cuando llega al otro lado
+								if(x2==7 && tablero[x2][y2]=="[P]"){
+									move(7,50);
+									attron(COLOR_PAIR(1));
+									printw("JUGADOR 1:               ");
+									move(8,50);
+									addstr("En que desa convertir su peon(solo ingrese la letra en mayuscula): ");
+    									refresh();
+   									getnstr(cambio_peon, sizeof(cordenada) - 1);
+									refresh();
+									attroff (COLOR_PAIR(1));
+
+									transformar_pieza=cambio_peon[0];
+
+									if(cordenada_x2=='A'){
+										tablero[x2][y2]="[A]";
+									}else if(cordenada_x2=='T'){
+										tablero[x2][y2]="[T]";
+									}else if(cordenada_x2=='C'){
+										tablero[x2][y2]="[C]";
+									}else if(cordenada_x2=='Q'){
+										tablero[x2][y2]="[Q]";
+									}else{
+										tablero[x2][y2]="[Q]";
+									}
 								}
 							}
 						}else if(tablero[x1][y1]=="[T]"){
@@ -836,14 +905,49 @@ int main(int argc, char*argv[]){
 									tablero[x2][y2]="[P]";
 									tablero2[x2][y2]= 2;
 								}else if(x1-2==x2 && y1-2==y2){
-									if(tablero2[x1+1][y1+1]==2 || tablero2[x1+1][y1+1]==222 || tablero2[x1+1][y1+1]==22){
+									if(tablero2[x1-1][y1-1]==1 || tablero2[x1-1][y1-1]==111 || tablero2[x1-1][y1-1]==11){
 										tablero[x1][y1]="[ ]";
 										tablero2[x1][y1]= 0;
 										tablero[x2][y2]="[P]";
 										tablero2[x2][y2]= 2;
-										tablero[x1+1][y1+1]="[ ]";
-										tablero2[x1+1][y1+1]= 0;
+										tablero[x1-1][y1-1]="[ ]";
+										tablero2[x1-1][y1-1]= 0;
 									}								
+								}else if(x1-2==x2 && y1+2==y2){
+									if(tablero2[x1-1][y1+1]==1 || tablero2[x1-1][y1+1]==111 || tablero2[x1-1][y1+1]==11){
+										tablero[x1][y1]="[ ]";
+										tablero2[x1][y1]= 0;
+										tablero[x2][y2]="[P]";
+										tablero2[x2][y2]= 1;
+										tablero[x1-1][y1+1]="[ ]";
+										tablero2[x1-1][y1+1]= 0;
+									}								
+								}
+								//cambiando el peon a otra pieza cuando llega al otro lado
+								if(x2==0 && tablero[x2][y2]=="[P]"){
+									move(7,50);
+									attron(COLOR_PAIR(2));
+									printw("JUGADOR 2:               ");
+									move(8,50);
+									addstr("En que desa convertir su peon(solo ingrese la letra en mayuscula): ");
+    									refresh();
+   									getnstr(cambio_peon, sizeof(cordenada) - 1);
+									refresh();
+									attroff (COLOR_PAIR(2));
+
+									transformar_pieza=cambio_peon[0];
+
+									if(cordenada_x2=='A'){
+										tablero[x2][y2]="[A]";
+									}else if(cordenada_x2=='T'){
+										tablero[x2][y2]="[T]";
+									}else if(cordenada_x2=='C'){
+										tablero[x2][y2]="[C]";
+									}else if(cordenada_x2=='Q'){
+										tablero[x2][y2]="[Q]";
+									}else{
+										tablero[x2][y2]="[Q]";
+									}
 								}
 							}
 						}else if(tablero[x1][y1]=="[T]"){
@@ -1168,9 +1272,60 @@ int main(int argc, char*argv[]){
 			Valides_entrada=0;
 		}
 		clear();
-
+		//verificar si alguien gano
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++){
+				if(tablero2[i][j]==22){
+					gano2=1;
+				}
+				if(tablero2[i][j]==11){
+					gano1=1;
+				}
+			}
+		}
+		if(gano1>gano2){
+			ganador=1;
+		}else if(gano1<gano2){
+			ganador=1;
+		}
 	}
+
+	string guardar,guardar2;
+	char save;
+
 	printw("Gracias por jugar adios");
+	move(8,50);
+	printw("Desea guardar[s/n]: ");
+	refresh();
+    save = getch();
+	if(save=='s'){
+		//guardar partidas
+	
+		for(int i=0;i<8;i++){
+			for(int x=0;x<8;x++){
+				guardar += tablero[i][x];
+			}
+		}
+
+		for(int i=0;i<8;i++){
+			for(int x=0;x<8;x++){
+				guardar2 += tablero2[i][x];
+			}
+		}
+
+		ofstream escribir("tablero1.txt");
+		escribir  << guardar; 
+		escribir.close();
+
+		ofstream escribir2("tablero2.txt");
+		escribir2  << guardar2; 
+		escribir2.close();
+	}
+	if(gano1>gano2){
+		printw("Gano jugador 1");
+	}else if(gano1<gano2){
+		printw("Gano jugador 2");
+	}
 	getch();
 	endwin();
 	return 0;
